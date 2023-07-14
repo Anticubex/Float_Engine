@@ -4,10 +4,10 @@ all: main
 SOURCEDIR := .
 # rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
 
-SRCS = main.cpp src/game.cpp
+SRCS := main.cpp src/game.cpp
 # SRCS  := $(call rwildcard,.,*.c)
 # SRCS  := $(shell Get-ChildItem -recurse | Select-String -pattern "*.c" | group path | select name)
-OBJS = obj/main.o obj/game.o
+OBJS := obj/main.o obj/game.o
 OUT := main.exe
 CC := g++
 CXXFLAGS := -std=c++17 -Wall -lmingw32 -lSDL2main -lSDL2 -Imingw32
@@ -18,11 +18,8 @@ main: $(OBJS)
 #	echo $(OBJS)
 	$(CC) $(OBJS) $(INCLUDES) $(LIBS) $(CXXFLAGS) -o $(OUT)
 
-obj/main.o: main.cpp
-	$(CC) -c main.cpp $(INCLUDES) $(LIBS) $(CXXFLAGS) -o obj/main.o
-
-obj/game.o: src/game.cpp | obj
-	$(CC) -c src/game.cpp $(INCLUDES) $(LIBS) $(CXXFLAGS) -o obj/game.o
+obj/&.o: %.cpp
+	$(CC) -c $(input) $(INCLUDES) $(LIBS) $(CXXFLAGS) -o $(output)
 
 # Maybe later to make use of object files and combat build times. But for now, I'm too bad of a programmer to use real makefiles
 # all: main

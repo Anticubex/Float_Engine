@@ -4,8 +4,8 @@
 #include <iostream>
 
 int initGame(SDL_State *state, int argc, char *argv[]) {
-        std::cout << "Initializing: timer, audio, video, joystick, haptic, gamecontroller and events subsystems\n";
 
+        std::cout << "Initializing: timer, audio, video, joystick, haptic, gamecontroller and events subsystems\n";
         /* Initializes the timer, audio, video, joystick,
         haptic, gamecontroller and events subsystems */
         if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -21,8 +21,6 @@ int initGame(SDL_State *state, int argc, char *argv[]) {
                 SDL_Quit();
                 return 1;
         }
-
-        std::cout << "Finished with main and window initialization\n";
 
         std::cout << "Creating renderer\n";
         /* Create a renderer */
