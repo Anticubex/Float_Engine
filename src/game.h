@@ -1,6 +1,6 @@
 #include "core/core.h"
 #include <SDL2/SDL.h>
-#include <stdbool.h>
+#include <cstdbool>
 #define WIDTH 640
 #define HEIGHT 480
 #define SIZE 200
