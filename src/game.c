@@ -82,21 +82,28 @@ int update(SDL_State *state, GameState *gameState) {
         /* Move the rectangle */
         gameState->x_vel = (gameState->right_pressed - gameState->left_pressed) * SPEED;
         gameState->y_vel += GRAVITY;
+
         if (gameState->jump_pressed && gameState->can_jump) {
                 gameState->can_jump = false;
                 gameState->y_vel = JUMP;
         }
+
         gameState->x_pos += gameState->x_vel / 60;
         gameState->y_pos += gameState->y_vel / 60;
+
         if (gameState->x_pos <= 0)
                 gameState->x_pos = 0;
+
         if (gameState->x_pos >= WIDTH - gameState->rect.w)
                 gameState->x_pos = WIDTH - gameState->rect.w;
+
         if (gameState->y_pos <= 0)
                 gameState->y_pos = 0;
+
         if (gameState->y_pos >= HEIGHT - gameState->rect.h) {
                 gameState->y_vel = 0;
                 gameState->y_pos = HEIGHT - gameState->rect.h;
+
                 if (!gameState->jump_pressed)
                         gameState->can_jump = true;
         }
