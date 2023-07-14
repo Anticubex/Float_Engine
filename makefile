@@ -24,6 +24,8 @@ obj/main.o: main.cpp
 obj/game.o: src/game.cpp
 	$(CC) -c src/game.cpp $(INCLUDES) $(LIBS) $(CXXFLAGS) -o obj/game.o
 
+obj:
+	mkdir -p $@
 
 # Maybe later to make use of object files and combat build times. But for now, I'm too bad of a programmer to use real makefiles
 # all: main
