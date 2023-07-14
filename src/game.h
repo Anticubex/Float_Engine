@@ -1,12 +1,9 @@
+#include "core/core.h"
 #include <SDL2/SDL.h>
 #include <stdbool.h>
 #define WIDTH 640
 #define HEIGHT 480
 #define SIZE 200
-#define SPEED 600
-#define GRAVITY 60
-#define FPS 60
-#define JUMP -1200
 
 typedef struct SDL_State {
         SDL_Window *wind;
