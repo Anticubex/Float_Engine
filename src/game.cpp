@@ -1,35 +1,35 @@
 #include "game.h"
 
 #include <SDL2/SDL.h>
-#include <stdio.h>
+#include <iostream>
 
 int initGame(SDL_State *state, int argc, char *argv[]) {
-        printf("Initializing: timer, audio, video, joystick, haptic, gamecontroller and events subsystems\n");
+        std::cout << "Initializing: timer, audio, video, joystick, haptic, gamecontroller and events subsystems\n";
 
         /* Initializes the timer, audio, video, joystick,
         haptic, gamecontroller and events subsystems */
         if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-                printf("Error initializing SDL: %s\n", SDL_GetError());
+                std::cout << "Error initializing SDL: " << SDL_GetError() << "\n";
                 return 1;
         }
 
-        printf("Creating window\n");
+        std::cout << "Creating window\n";
         /* Create a window */
         state->wind = SDL_CreateWindow("Hello Platformer!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0);
         if (!state->wind) {
-                printf("Error creating window: %s\n", SDL_GetError());
+                std::cout << "Error creating window: " << SDL_GetError() << "\n";
                 SDL_Quit();
                 return 1;
         }
 
-        printf("Finished with main and window initialization\n");
+        std::cout << "Finished with main and window initialization\n";
 
-        printf("Creating renderer\n");
+        std::cout << "Creating renderer\n";
         /* Create a renderer */
         Uint32 render_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
         state->rend = SDL_CreateRenderer(state->wind, -1, render_flags);
         if (!state->rend) {
-                printf("Error creating renderer: %s\n", SDL_GetError());
+                std::cout << "Error creating renderer: " << SDL_GetError() << "\n";
                 SDL_DestroyWindow(state->wind);
                 SDL_Quit();
                 return 1;
