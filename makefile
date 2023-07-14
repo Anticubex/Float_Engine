@@ -10,7 +10,7 @@ SRCS = main.cpp src/game.cpp
 OBJS = obj/main.o obj/game.o
 OUT := main.exe
 CC := g++
-CXXFLAGS := -std=c17 -Wall -lmingw32 -lSDL2main -lSDL2 -Imingw32
+CXXFLAGS := -std=c++17 -Wall -lmingw32 -lSDL2main -lSDL2 -Imingw32
 INCLUDES := -I $(SOURCEDIR)/SDL2/include
 LIBS := -L $(SOURCEDIR)/SDL2/lib 
 
@@ -21,11 +21,8 @@ main: $(OBJS)
 obj/main.o: main.cpp
 	$(CC) -c main.cpp $(INCLUDES) $(LIBS) $(CXXFLAGS) -o obj/main.o
 
-obj/game.o: src/game.cpp
+obj/game.o: src/game.cpp | obj
 	$(CC) -c src/game.cpp $(INCLUDES) $(LIBS) $(CXXFLAGS) -o obj/game.o
-
-obj:
-	mkdir -p $@
 
 # Maybe later to make use of object files and combat build times. But for now, I'm too bad of a programmer to use real makefiles
 # all: main
