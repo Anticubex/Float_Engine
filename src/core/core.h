@@ -1,4 +1,5 @@
-#include "gameobject/gameobject.h"
+#include "gameobject.h"
+#include "vector.h"
 
 #define SPEED 600
 #define GRAVITY 60

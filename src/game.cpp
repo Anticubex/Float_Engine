@@ -52,10 +52,8 @@ int runGame(SDL_State *state) {
             true,
             false,
             false,
-            (WIDTH - SIZE) / 2,
-            SIZE / 2,
-            0,
-            0,
+            Vector((WIDTH - SIZE) / 2, SIZE / 2),
+            Vector(0, 0),
             {(WIDTH - SIZE) / 2, (HEIGHT - SIZE) / 2, SIZE, SIZE},
 
         };
@@ -78,36 +76,35 @@ int update(SDL_State *state, GameState *gameState) {
         SDL_RenderClear(state->rend);
 
         /* Move the rectangle */
-        gameState->x_vel = (gameState->right_pressed - gameState->left_pressed) * SPEED;
-        gameState->y_vel += GRAVITY;
+        gameState->vel.x = (gameState->right_pressed - gameState->left_pressed) * SPEED;
+        gameState->vel.y += GRAVITY;
 
         if (gameState->jump_pressed && gameState->can_jump) {
                 gameState->can_jump = false;
-                gameState->y_vel = JUMP;
+                gameState->vel.y = JUMP;
         }
 
-        gameState->x_pos += gameState->x_vel / 60;
-        gameState->y_pos += gameState->y_vel / 60;
+        gameState->pos += gameState->vel / FPS;
 
-        if (gameState->x_pos <= 0)
-                gameState->x_pos = 0;
+        if (gameState->pos.x <= 0)
+                gameState->pos.x = 0;
 
-        if (gameState->x_pos >= WIDTH - gameState->rect.w)
-                gameState->x_pos = WIDTH - gameState->rect.w;
+        if (gameState->pos.x >= WIDTH - gameState->rect.w)
+                gameState->pos.x = WIDTH - gameState->rect.w;
 
-        if (gameState->y_pos <= 0)
-                gameState->y_pos = 0;
+        if (gameState->pos.y <= 0)
+                gameState->pos.y = 0;
 
-        if (gameState->y_pos >= HEIGHT - gameState->rect.h) {
-                gameState->y_vel = 0;
-                gameState->y_pos = HEIGHT - gameState->rect.h;
+        if (gameState->pos.y >= HEIGHT - gameState->rect.h) {
+                gameState->vel.y = 0;
+                gameState->pos.y = HEIGHT - gameState->rect.h;
 
                 if (!gameState->jump_pressed)
                         gameState->can_jump = true;
         }
 
-        gameState->rect.x = (int)gameState->x_pos;
-        gameState->rect.y = (int)gameState->y_pos;
+        gameState->rect.x = (int)gameState->pos.x;
+        gameState->rect.y = (int)gameState->pos.y;
 
         /* Draw the rectangle */
         SDL_SetRenderDrawColor(state->rend, 255, 0, 0, 255);

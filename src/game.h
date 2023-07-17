@@ -1,5 +1,5 @@
-#include "core/core.h"
 #include <SDL2/SDL.h>
+#include <core.h>
 #include <stdbool.h>
 #define WIDTH 640
 #define HEIGHT 480
@@ -16,10 +16,8 @@ typedef struct GameState {
         bool can_jump;
         bool left_pressed;
         bool right_pressed;
-        float x_pos;
-        float y_pos;
-        float x_vel;
-        float y_vel;
+        Vector pos;
+        Vector vel;
         SDL_Rect rect;
         SDL_Event event;
 } GameState;
