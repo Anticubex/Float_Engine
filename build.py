@@ -1,23 +1,18 @@
 from os import path
 import os, shutil, sys
 
+sys.path.append(os.path.join(".", "build"))
+
+from globalsettings import *
+from includer import lastTimeMod
+# from objer import *
+
 forceRecompile = "-f" in sys.argv
 # forceRecompile = True
 if forceRecompile:
         print("Forcing recompilation")
 
-sourceTypes = (".cpp", ".c")
-
-# sourcedir = path.abspath(os.getcwd())
-sourcedir = "."
-
-objdir = os.path.join(sourcedir, "build", "obj")
-
-out = "main.exe"
-cxx = "g++"
-pflags = "-std=c++17"
-flags = "-Wall -lmingw32 -lSDL2main -lSDL2"
-lflags = f"-I{sourcedir}/src/core -I{sourcedir}/SDL2/include -L{sourcedir}/SDL2/lib"
+runAfterDone = "-r" in sys.argv
 
 print("Bulding project in directory", sourcedir)
 
@@ -54,14 +49,14 @@ def compileFile(root, file):
         # print("Compiling", absName, "to", objName)
 
         objs.append(objName)
-
+        
         #Check if OBJ exists
         precomped = path.exists(objName)
         if precomped:
                 ...
                 #Check if file was modified before obj
-                compModTime = os.path.getmtime(objName)
-                fileModTime = os.path.getmtime(absName)
+                compModTime = path.getmtime(objName)
+                fileModTime = lastTimeMod(absName)
 
                 # import time
                 # modificationTime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(compModTime))
@@ -93,9 +88,9 @@ def compile():
 def cleanObjs():
         print("Removing objs")
         for filename in os.listdir(objdir):
-                file_path = os.path.join(objdir, filename)
+                file_path = path.join(objdir, filename)
                 try:
-                        if os.path.isfile(file_path) or os.path.islink(file_path):
+                        if path.isfile(file_path) or path.islink(file_path):
                                 os.unlink(file_path)
                         elif os.path.isdir(file_path):
                                 shutil.rmtree(file_path)
@@ -120,3 +115,6 @@ if __name__ == "__main__":
         # print("srcs:", srcs)
         compile()
         link()
+
+        if runAfterDone:
+                os.system(path.join(".", out))

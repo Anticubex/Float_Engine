@@ -15,7 +15,7 @@ int initGame(SDL_State *state, int argc, char *argv[]) {
 
         std::cout << "Creating window\n";
         /* Create a window */
-        state->wind = SDL_CreateWindow("Hello Platformer!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0);
+        state->wind = SDL_CreateWindow(NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, 0);
         if (!state->wind) {
                 std::cout << "Error creating window: " << SDL_GetError() << "\n";
                 SDL_Quit();

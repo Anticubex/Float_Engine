@@ -2,8 +2,9 @@
 #include <core.h>
 #include <stdbool.h>
 #define WIDTH 640
-#define HEIGHT 480
+#define HEIGHT 580
 #define SIZE 200
+#define NAME "Hello Platformer!"
 
 typedef struct SDL_State {
         SDL_Window *wind;

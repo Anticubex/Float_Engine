@@ -2,10 +2,12 @@
 #include <SDL2/SDL.h>
 #include <stdbool.h>
 
-class GameObject {
-};
+// class GameObject {
+//       public:
+//         Transform transform;
+// };
 
-class Transform {
-      public:
-        Vector pos;
-};
+// class Transform {
+//       public:
+//         Vector pos;
+// };
