@@ -1,3 +1,5 @@
+""" A basic python library for building a C/C++ project """
+
 from os import path
 import os, shutil, sys
 
