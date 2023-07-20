@@ -1,6 +1,7 @@
 """ A basic python library for building a C/C++ project """
 
 from os import path
+from sys import argv
 import os, shutil, sys
 
 sys.path.append(os.path.join(".", "build"))
@@ -9,12 +10,15 @@ from globalsettings import *
 from includer import lastTimeMod
 # from objer import *
 
-forceRecompile = "-f" in sys.argv
+forceRecompile = "-f" in argv
 # forceRecompile = True
 if forceRecompile:
         print("Forcing recompilation")
 
-runAfterDone = "-r" in sys.argv
+runAfterDone = "-r" in argv
+
+if "-o" in argv:
+        out = argv[argv.index("-o") + 1]
 
 print("Bulding project in directory", sourcedir)
 
