@@ -3,6 +3,12 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
+/********************************
+ * Currently a test app for     *
+ * the SDL2 library import      *
+ * and game engine abstractions *
+ ********************************/
+
 int initGame(SDL_State *state, int argc, char *argv[]) {
 
         std::cout << "Initializing: timer, audio, video, joystick, haptic, gamecontroller and events subsystems\n";
