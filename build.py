@@ -130,8 +130,8 @@ def checkExts(file):
         return any(file.lower().endswith(ext) for ext in sourceTypes)
 
 @click.command()
-@click.option('-f', '--force-recompilation', 'forceRecompile', default=False, help='Forcefully remove all cached object files and recompile everything')
-@click.option('-r', '--autorun', 'runAfterDone', default=True, help='Automatically run after finished compiling.')
+@click.option('-f', '--force-recompilation', 'forceRecompile', is_flag=True, default=False, help='Forcefully remove all cached object files and recompile everything')
+@click.option('-r',  '--autorun', 'runAfterDone', is_flag=True, default=True, help='Automatically run after finished compiling.')
 @click.option('-o', '--output', 'output', default=out, help='Executable to output to.')
 @click.option('-t', '--test', 'testcase', default=None, help='Case to test')
 def main(forceRecompile, runAfterDone, output, testcase):
