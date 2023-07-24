@@ -10,33 +10,21 @@
 
 int main(int argc, char *argv[]) {
 
-        // Testing matrices
-        using namespace std;
+        // Main loop
+        // SDL_State state;
 
-        // Strassen's Multiplication
+        // int initGameCode = initGame(&state, argc, argv);
 
-        Matrix A(4, 4, vector<float>{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
+        // if (initGameCode != 0) {
+        //         return initGameCode;
+        // }
 
-        Matrix B(4, 4, vector<float>{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
+        // if (runGame(&state) != 0) {
+        //         destroyGame(&state);
+        //         return 1;
+        // }
 
-        /* Result should be
-                C1	C2	C3	C4
-        1	90	100	110	120
-        2	202	228	254	280
-        3	314	356	398	440
-        4	426	484	542	600
-        */
-
-        cout << "A: ";
-        A.printout();
-        cout << "B: ";
-        B.printout();
-
-        Matrix C = (A * B);
-
-        cout << "\nResult:";
-
-        C.printout();
+        // destroyGame(&state);
 
         return 0;
 }
