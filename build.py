@@ -123,4 +123,5 @@ if __name__ == "__main__":
         link()
 
         if runAfterDone:
+                print("\nRunning\n")
                 os.system(path.join(".", out))
