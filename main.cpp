@@ -11,22 +11,26 @@
 int main(int argc, char *argv[]) {
 
         using namespace xmath;
+        using namespace std;
 
-        float x = 100;
-        float invSqrt = 0.1f;
-        float norm = 1 / sqrt(x);
-        float fast = fastInvSqrt(x);
+        Matrix A(1, 2);
 
-        std::cout << x << "\n"
-                  << invSqrt << "\n"
-                  << norm << "\n"
-                  << fast << "\n";
-
-        for (size_t i = 0; i < 10; i++) {
-                float precise_fast = precise_fastInvSqrt(x, i);
-                std::cout << "(" << i << "): " << precise_fast << "\n";
+        cout << "(" << A.rows << ", " << A.cols << "): [";
+        for (float x : A.values) {
+                cout << x << "\t";
         }
+        cout << "]\n";
 
+        cout << A(0, 0) << "\t" << A(0, 1) << "\n";
+        // cout << A(1, 0) << "\t" << A(1, 1) << "\n";
+
+        A(0, 1) = 10.01;
+        cout << "\n";
+
+        cout << A(0, 0) << "\t" << A(0, 1) << "\n";
+        // cout << A(1, 0) << "\t" << A(1, 1) << "\n";
+
+        // Main loop
         // SDL_State state;
 
         // int initGameCode = initGame(&state, argc, argv);
