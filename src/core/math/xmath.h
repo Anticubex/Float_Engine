@@ -5,7 +5,6 @@ namespace xmath {
 float fastInvSqrt(const float x);
 float precise_fastInvSqrt(const float x, const size_t rounds);
 
-template <class T = size_t>
-int isPow2(T num);
+int isPow2(size_t num);
 
 }; // namespace xmath

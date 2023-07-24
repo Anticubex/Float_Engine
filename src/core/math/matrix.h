@@ -5,10 +5,15 @@
 class Matrix {
 
       public:
-        /// @brief Generates a matrix of set rows and columns
+        /// @brief Generates an empty matrix of set rows and columns
         /// @param rows The number of rows of a matrix
         /// @param cols The number of columns of a matrix
         Matrix(const size_t rows, const size_t cols);
+
+        /// @brief Generates a matrix of set rows and columns, initializing with a list vector. Implementation-dependent, currently snake-curve column-major order from top-left
+        /// @param rows The number of rows of a matrix
+        /// @param cols The number of columns of a matrix
+        Matrix(const size_t rows, const size_t cols, const std::vector<float> vec);
 
         /// @brief Gets a reference to the value at a certain row and colum
         /// @param row Row of the entry
@@ -45,8 +50,10 @@ class Matrix {
         size_t size;
         std::vector<float> values;
 
-        void printout();
+        void printout() const;
 
       private:
-        static int naive_Iter_mul(const size_t row, const size_t col, const Matrix &A, const Matrix &B, Matrix &product);
+        static Matrix naive_Iter_mul(const Matrix &A, const Matrix &B);
+        static int naive_Iter_Mul_Func(const size_t row, const size_t col, const Matrix &A, const Matrix &B, Matrix &product);
+        static Matrix strassens_mul(const Matrix &A, const Matrix &B);
 };

@@ -4,6 +4,8 @@ from os import path
 from sys import argv
 import os, shutil, sys
 
+import click
+
 sys.path.append(os.path.join(".", "build"))
 
 from globalsettings import *
@@ -116,7 +118,7 @@ def checkExts(file):
         return any(file.lower().endswith(ext) for ext in sourceTypes)
 
 
-if __name__ == "__main__":
+def main():
         getSrcFiles()
         # print("srcs:", srcs)
         compile()
@@ -125,3 +127,7 @@ if __name__ == "__main__":
         if runAfterDone:
                 print("\nRunning\n")
                 os.system(path.join(".", out))
+        ...
+
+if __name__ == "__main__":
+        main()

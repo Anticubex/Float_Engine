@@ -25,7 +25,9 @@ float xmath::precise_fastInvSqrt(const float x, const size_t rounds) {
         return y;
 }
 
-template <class T>
-int xmath::isPow2(T n) {
+// This algorithm blow my mind. I found it on a random tutorial, and spent 30 minutes
+// trying to verify that it's correct, and I also benchmarked it and found it to be
+// ~2 times as fast as other methods (specifically shifting-and-checking)
+int xmath::isPow2(size_t n) {
         return !(n & (n - 1));
 }

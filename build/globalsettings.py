@@ -8,7 +8,7 @@ sourcedir: str = "."
 
 objdir: str = path.join(sourcedir, "build", "obj")
 
-out: str = "main"
+out: str = "main.exe"
 cxx: str = "g++"
 pflags: str = "-std=c++17"
 flags: str = "-Wall -lmingw32 -lSDL2main -lSDL2"
