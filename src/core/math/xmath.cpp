@@ -24,3 +24,8 @@ float xmath::precise_fastInvSqrt(const float x, const size_t rounds) {
         }
         return y;
 }
+
+template <class T>
+int xmath::isPow2(T n) {
+        return !(n & (n - 1));
+}
