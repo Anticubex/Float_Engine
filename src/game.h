@@ -1,10 +1,17 @@
 #include <SDL2/SDL.h>
-#include <core.h>
 #include <stdbool.h>
+
+#include <math/vector2.h>
+
 #define WIDTH 640
 #define HEIGHT 580
 #define SIZE 200
 #define NAME "Hello Platformer!"
+
+#define SPEED 600
+#define GRAVITY 60
+#define FPS 60
+#define JUMP -1200
 
 typedef struct SDL_State {
         SDL_Window *wind;
