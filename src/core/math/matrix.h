@@ -22,12 +22,12 @@ class Matrix {
         /// @brief Add two matrices
         /// @param other Other matrix to add
         /// @return The sum of the matrices
-        Matrix operator+(const Matrix &other);
+        Matrix operator+(const Matrix &other) const;
 
         /// @brief Multiply two matrices
         /// @param other Other matrix to multiply
         /// @return The product of the matrices
-        Matrix operator*(const Matrix &other);
+        Matrix operator*(const Matrix &other) const;
 
         size_t rows;
         size_t cols;

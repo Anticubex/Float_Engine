@@ -21,7 +21,7 @@ float Matrix::get(const size_t row, const size_t col) const {
         // TODO: Z-curve
 }
 
-Matrix Matrix::operator+(const Matrix &other) {
+Matrix Matrix::operator+(const Matrix &other) const {
         if (rows != other.rows || cols != other.cols) {
                 throw std::runtime_error("Matrix Sizes Incompatible");
         }
@@ -34,7 +34,7 @@ Matrix Matrix::operator+(const Matrix &other) {
 
 // TODO: implement multiple matrix multiplication algorithms and benchmark
 
-Matrix Matrix::operator*(const Matrix &other) {
+Matrix Matrix::operator*(const Matrix &other) const {
         if (cols != other.rows) {
                 throw std::runtime_error("Matrix Sizes Incompatible");
         }
