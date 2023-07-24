@@ -12,30 +12,24 @@ from globalsettings import *
 from includer import lastTimeMod
 # from objer import *
 
-forceRecompile = "-f" in argv
-# forceRecompile = True
-if forceRecompile:
-        print("Forcing recompilation")
-
-runAfterDone = "-r" in argv
-
-if "-o" in argv:
-        out = argv[argv.index("-o") + 1]
-
 print("Bulding project in directory", sourcedir)
 
 srcs = []
 objs = []
 
-def getSrcFiles():
+def getSrcFiles(testcase: str):
         global srcs
         srcsTmp = []
+
         # Get all directories with src files
         for (root,dirs,files) in os.walk(sourcedir):
                 # print(root)
                 # print(dirs)
                 # print(files)
-                # print("-" * (max(len(root), len(dirs), len(files)) + 5))
+                # print("-" * (max(len(str(root)), len(str(dirs)), len(str(files)))))
+                if root[0:len(testdir)] == testdir:
+                        # print("PASSING", root)
+                        continue
                 for file in files:
                         if checkExts(file):
                                 srcsTmp.append([root,files])
@@ -49,6 +43,24 @@ def getSrcFiles():
                         if checkExts(file):
                                 filesTmp.append(file)
                 srcs.append([root, filesTmp])
+
+        if testcase == None:
+                return
+        
+        # Change srcs for testcase
+        srcs.remove(['.', ['main.cpp']])
+
+        # Match testcase to a test file name
+        for (root,dirs,files) in os.walk(testdir):
+                print(root)
+                print(dirs)
+                print(files)
+                print("-" * (max(len(str(root)), len(str(dirs)), len(str(files)))))
+                
+                for file in files:
+                        if checkExts(file) and testcase in file:
+                                srcs.append([root, [file]])
+
 
 
 def compileFile(root, file):
@@ -81,7 +93,7 @@ def compileFile(root, file):
         print("Compiling", absName, "to", objName, "with", cmd)
         os.system(cmd)
 
-def compile():
+def compile(forceRecompile: bool):
 
         if not path.exists(objdir):
                 os.mkdir(objdir)
@@ -117,17 +129,26 @@ def link():
 def checkExts(file):
         return any(file.lower().endswith(ext) for ext in sourceTypes)
 
+@click.command()
+@click.option('-f', '--force-recompilation', 'forceRecompile', default=False, help='Forcefully remove all cached object files and recompile everything')
+@click.option('-r', '--autorun', 'runAfterDone', default=True, help='Automatically run after finished compiling.')
+@click.option('-o', '--output', 'output', default=out, help='Executable to output to.')
+@click.option('-t', '--test', 'testcase', default=None, help='Case to test')
+def main(forceRecompile, runAfterDone, output, testcase):
 
-def main():
-        getSrcFiles()
-        # print("srcs:", srcs)
-        compile()
+        out = output
+
+        if forceRecompile:
+                print("Forcing recompilation")
+
+        getSrcFiles(testcase)
+        print("srcs:", srcs)
+        compile(forceRecompile)
         link()
 
         if runAfterDone:
                 print("\nRunning\n")
                 os.system(path.join(".", out))
-        ...
 
 if __name__ == "__main__":
         main()

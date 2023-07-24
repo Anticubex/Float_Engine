@@ -6,6 +6,8 @@ sourceTypes = (".cpp", ".c")
 # sourcedir = path.abspath(os.getcwd())
 sourcedir: str = "."
 
+testdir: str = path.join(sourcedir, "test")
+
 objdir: str = path.join(sourcedir, "build", "obj")
 
 out: str = "main.exe"
