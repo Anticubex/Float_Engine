@@ -20,11 +20,6 @@ int main(int argc, char *argv[]) {
         4	426	484	542	600
         */
 
-        cout << "A: ";
-        A.printout();
-        cout << "B: ";
-        B.printout();
-
         Matrix C = (A * B);
 
         cout << "\nResult:";

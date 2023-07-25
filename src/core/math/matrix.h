@@ -2,6 +2,8 @@
 #include <cstddef>
 #include <vector>
 
+#include <string>
+
 class Matrix {
 
       public:
@@ -10,7 +12,7 @@ class Matrix {
         /// @param cols The number of columns of a matrix
         Matrix(const size_t rows, const size_t cols);
 
-        /// @brief Generates a matrix of set rows and columns, initializing with a list vector. Implementation-dependent, currently snake-curve column-major order from top-left
+        /// @brief Generates a matrix of set rows and columns, initializing with a list vector. Implementation-dependent, currently snake-curve row-major order from top-left
         /// @param rows The number of rows of a matrix
         /// @param cols The number of columns of a matrix
         Matrix(const size_t rows, const size_t cols, const std::vector<float> vec);
@@ -28,6 +30,11 @@ class Matrix {
         /// @param other Other matrix to add
         /// @return The sum of the matrices
         Matrix operator+(const Matrix &other) const;
+
+        /// @brief Subtract two matrices
+        /// @param other Other matrix to subtract
+        /// @return The difference of the matrices
+        Matrix operator-(const Matrix &other) const;
 
         /// @brief Multiply two matrices
         /// @param other Other matrix to multiply
@@ -51,6 +58,8 @@ class Matrix {
         std::vector<float> values;
 
         void printout() const;
+        // static void printout(const Matrix &A, const Matrix &B);
+        // static int getNumLength(const size_t, const size_t, const Matrix &matrix, std::vector<string> &nums);
 
       private:
         static Matrix naive_Iter_mul(const Matrix &A, const Matrix &B);

@@ -14,6 +14,17 @@ Matrix Matrix::operator+(const Matrix &other) const {
         return sum;
 }
 
+Matrix Matrix::operator-(const Matrix &other) const {
+        if (rows != other.rows || cols != other.cols) {
+                throw std::runtime_error("Matrix Sizes Incompatible");
+        }
+        Matrix sum(rows, cols);
+        for (size_t i = 0; i < size; i++) {
+                sum.values[i] = values[i] - other.values[i];
+        }
+        return sum;
+}
+
 // TODO: implement multiple matrix multiplication algorithms and benchmark
 
 Matrix Matrix::operator*(const Matrix &other) const {
@@ -26,7 +37,7 @@ Matrix Matrix::operator*(const Matrix &other) const {
         // check if the matrices are both square, equal in size, and powers of
         // two in size, to see if we can use strassen's algorithm
 
-        if ((rows == other.rows) && (cols == other.cols) && xmath::isPow2(rows) && xmath::isPow2(cols)) {
+        if (xmath::isPow2(rows) && (rows == other.rows) && (cols == other.cols) && (cols == rows)) {
                 return strassens_mul(*this, other);
         }
 
@@ -50,25 +61,34 @@ Matrix Matrix::naive_Iter_mul(const Matrix &A, const Matrix &B) {
         return product;
 }
 
+int printoutfloats(const std::vector<float> vals);
+
 Matrix Matrix::strassens_mul(const Matrix &A, const Matrix &B) {
 
-        std::cout << "\nDoing strassen_mul:\n";
-        A.printout();
-        std::cout << "\n";
-        B.printout();
-        std::cout << "\n";
+        using namespace std;
+        // cout << "\nDoing strassen_mul:\n";
+        // A.printout();
+        // cout << "\n";
+        // B.printout();
+        // cout << "\n";
 
         // Assumes matrices are square with rows and columns same powers of two
         // Private method, so it's safe-ish to do so
 
-        /************************************************************************************************
+        /***********************************************************************************************
          * Strassen's Decomposition Matrix Multiplaction Algorithm / Divide and Conquer Multiplication *
          * Core idea:                                                                                  *
          * | a b | * | e f | = | ae+bg af+bh | = | c1 c2 |                                             *
          * | c d |   | g h |   | ce+dg cf+dh |   | c3 c4 |                                             *
          * Both when a,b,c,d,e,f,g,h are matrices and scalars                                          *
          * Thus, one can divide the matrices into submatrices and solve recursively                    *
-         ************************************************************************************************/
+         *
+         * A second possible optimization can be achieve like so:
+         * ae + bg = (a + d)(e + h) + d(g - e) - (a + h)h + (b - d)(g + h)
+         * af + bh = a(f - h) + (a + b)h
+         * ce + dg = (c + f)d + d(g - e)
+         * cf + dh = a(f - h) +(a + d)(e + h) - (c + d)e - (a - c)(e + f)
+         ***********************************************************************************************/
 
         // Pick an arbitrary size
         size_t size = A.rows;
@@ -98,20 +118,91 @@ Matrix Matrix::strassens_mul(const Matrix &A, const Matrix &B) {
         /* Decompose the matrices */
 
         Matrix a(s2, s2), b(s2, s2), c(s2, s2), d(s2, s2), e(s2, s2), f(s2, s2), g(s2, s2), h(s2, s2);
+        // cout << "A: ";
+        // a.printout();
+        // cout << "B: ";
+        // b.printout();
+        // cout << "C: ";
+        // c.printout();
+        // cout << "D: ";
+        // d.printout();
+        // cout << "E: ";
+        // e.printout();
+        // cout << "F: ";
+        // f.printout();
+        // cout << "G: ";
+        // g.printout();
+        // cout << "H: ";
+        // h.printout();
+
+        // cout << s2 << "  " << size << "\n";
 
         for (size_t m = 0; m < s2; m++) {
                 for (size_t n = 0; n < s2; n++) {
                         a(m, n) = A.get(m, n);
-                        b(m, n + s2) = A.get(m, n + s2);
-                        c(m + s2, n) = A.get(m + s2, n);
-                        d(m + s2, n + s2) = A.get(m + s2, n + s2);
+                        // cout << "assigned a\n";
+                        // printoutfloats(a.values);
+                        b(m, n) = A.get(m, n + s2);
+                        // cout << "assigned b\n";
+                        // printoutfloats(b.values);
+                        c(m, n) = A.get(m + s2, n);
+                        // cout << "assigned c\n";
+                        // printoutfloats(c.values);
+                        d(m, n) = A.get(m + s2, n + s2);
+                        // cout << "assigned d\n";
+                        // printoutfloats(d.values);
 
                         e(m, n) = B.get(m, n);
-                        f(m, n + s2) = B.get(m, n + s2);
-                        g(m + s2, n) = B.get(m + s2, n);
-                        h(m + s2, n + s2) = B.get(m + s2, n + s2);
+                        // cout << "assigned e\n";
+                        // printoutfloats(e.values);
+                        f(m, n) = B.get(m, n + s2);
+                        // cout << "assigned f\n";
+                        // printoutfloats(f.values);
+                        g(m, n) = B.get(m + s2, n);
+                        // cout << "assigned g\n";
+                        // printoutfloats(g.values);
+                        h(m, n) = B.get(m + s2, n + s2);
+                        // cout << "assigned h\n";
+                        // printoutfloats(h.values);
+
+                        // cout << m << ", " << n << "\n";
+
+                        // cout << "A: ";
+                        // a.printout();
+                        // cout << "B: ";
+                        // b.printout();
+                        // cout << "C: ";
+                        // c.printout();
+                        // cout << "D: ";
+                        // d.printout();
+                        // cout << "E: ";
+                        // e.printout();
+                        // cout << "F: ";
+                        // f.printout();
+                        // cout << "G: ";
+                        // g.printout();
+                        // cout << "H: ";
+                        // h.printout();
                 }
         }
+
+        // cout << "Decomposed into following:\n";
+        // cout << "A: ";
+        // a.printout();
+        // cout << "B: ";
+        // b.printout();
+        // cout << "C: ";
+        // c.printout();
+        // cout << "D: ";
+        // d.printout();
+        // cout << "E: ";
+        // e.printout();
+        // cout << "F: ";
+        // f.printout();
+        // cout << "G: ";
+        // g.printout();
+        // cout << "H: ";
+        // h.printout();
 
         /* Actual Multiplication */
         Matrix c1 = strassens_mul(a, e) + strassens_mul(b, g);
@@ -130,10 +221,18 @@ Matrix Matrix::strassens_mul(const Matrix &A, const Matrix &B) {
                 }
         }
 
-        // std::cout << "Result:";
+        // cout << "Result:";
         // result.printout();
 
         return result;
+}
+
+int printoutfloats(const std::vector<float> vals) {
+        for (float i : vals) {
+                std::cout << i << "  ";
+        }
+        std::cout << "\n";
+        return 0;
 }
 
 template <class... Types>
