@@ -64,5 +64,10 @@ class Matrix {
       private:
         static Matrix naive_Iter_mul(const Matrix &A, const Matrix &B);
         static int naive_Iter_Mul_Func(const size_t row, const size_t col, const Matrix &A, const Matrix &B, Matrix &product);
-        static Matrix strassens_mul(const Matrix &A, const Matrix &B);
+        // static Matrix square_strassens_mul(const Matrix &A, const Matrix &B);
+        static Matrix general_DaC_mul(const Matrix &A, const Matrix &B);
+
+        inline static Matrix Dac_case1(const Matrix &A, const Matrix &B);
+        inline static Matrix Dac_case2(const Matrix &A, const Matrix &B);
+        inline static Matrix Dac_case3(const Matrix &A, const Matrix &B);
 };
