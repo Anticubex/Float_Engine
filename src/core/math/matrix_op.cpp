@@ -82,12 +82,18 @@ Matrix Matrix::strassens_mul(const Matrix &A, const Matrix &B) {
          * | c d |   | g h |   | ce+dg cf+dh |   | c3 c4 |                                             *
          * Both when a,b,c,d,e,f,g,h are matrices and scalars                                          *
          * Thus, one can divide the matrices into submatrices and solve recursively                    *
-         *
-         * A second possible optimization can be achieve like so:
-         * ae + bg = (a + d)(e + h) + d(g - e) - (a + h)h + (b - d)(g + h)
-         * af + bh = a(f - h) + (a + b)h
-         * ce + dg = (c + f)d + d(g - e)
-         * cf + dh = a(f - h) +(a + d)(e + h) - (c + d)e - (a - c)(e + f)
+         * -                                                                                           *
+         * A second possible optimization can be achieve like so:                                      *
+         * ae + bg = (a + d)(e + h) + d(g - e) - (a + b)h + (b - d)(g + h)                             *
+         * af + bh = a(f - h) + (a + b)h                                                               *
+         * ce + dg = (c + d)e + d(g - e)                                                               *
+         * cf + dh = a(f - h) + (a + d)(e + h) - (c + d)e - (a - c)(e + f)                             *
+         * -                                                                                           *
+         * Thus, only 7 multiplications are necesary:                                                  *
+         * p1 = (a + d)(e + h)          p5 = a(f - h)                                                  *
+         * p2 = d(g - e)                p6 = (c + d)e                                                  *
+         * p3 = (a + b)h                p7 = (a - c)(e + f)                                            *
+         * p4 = (b - d)(g + h)                                                                         *
          ***********************************************************************************************/
 
         // Pick an arbitrary size
@@ -113,7 +119,7 @@ Matrix Matrix::strassens_mul(const Matrix &A, const Matrix &B) {
         // I think this is where the difference between snake/hilbert/z-curve gets big,
         // If I go through the work of creating whole different "unsafe" algs for each method
 
-        // Naive/safe method //
+        // Naive/safe/snake-curve major method //
 
         /* Decompose the matrices */
 
@@ -205,13 +211,29 @@ Matrix Matrix::strassens_mul(const Matrix &A, const Matrix &B) {
         // h.printout();
 
         /* Actual Multiplication */
-        Matrix c1 = strassens_mul(a, e) + strassens_mul(b, g);
-        Matrix c2 = strassens_mul(a, f) + strassens_mul(b, h);
-        Matrix c3 = strassens_mul(c, e) + strassens_mul(d, g);
-        Matrix c4 = strassens_mul(c, f) + strassens_mul(d, h);
+        // Boring way
+        // Matrix c1 = strassens_mul(a, e) + strassens_mul(b, g);
+        // Matrix c2 = strassens_mul(a, f) + strassens_mul(b, h);
+        // Matrix c3 = strassens_mul(c, e) + strassens_mul(d, g);
+        // Matrix c4 = strassens_mul(c, f) + strassens_mul(d, h);
+
+        // Optimized way
+        Matrix p1 = (a + d) * (e + h);
+        Matrix p2 = d * (g - e);
+        Matrix p3 = (a + b) * h;
+        Matrix p4 = (b - d) * (g + h);
+        Matrix p5 = a * (f - h);
+        Matrix p6 = (c + d) * e;
+        Matrix p7 = (a - c) * (e + f);
+
+        Matrix c1 = p1 + p2 - p3 + p4;
+        Matrix c2 = p5 + p3;
+        Matrix c3 = p6 + p2;
+        Matrix c4 = p5 + p1 - p6 - p7;
 
         /* Compose the matrices */
         Matrix result(size, size);
+
         for (size_t m = 0; m < s2; m++) {
                 for (size_t n = 0; n < s2; n++) {
                         result(m, n) = c1(m, n);
