@@ -5,7 +5,8 @@ build/__pycache__/
 *$py.class
 .venv/
 
-.o
+
+**/.o
 .vscode
 main.exe
 a.out

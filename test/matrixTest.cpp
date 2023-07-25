@@ -1,3 +1,6 @@
+#define ANKERL_NANOBENCH_IMPLEMENT
+#include "nanobench.h"
+
 #include <iostream>
 #include <math/matrix.h>
 
