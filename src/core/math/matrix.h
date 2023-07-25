@@ -1,3 +1,5 @@
+#pragma once
+
 #include "vector2.h"
 #include <cstddef>
 #include <vector>
