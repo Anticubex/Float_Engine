@@ -211,6 +211,7 @@ Matrix Matrix::strassens_mul(const Matrix &A, const Matrix &B) {
         // h.printout();
 
         /* Actual Multiplication */
+
         // Boring way
         // Matrix c1 = strassens_mul(a, e) + strassens_mul(b, g);
         // Matrix c2 = strassens_mul(a, f) + strassens_mul(b, h);
