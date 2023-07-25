@@ -13,7 +13,7 @@ objdir: str = path.join(sourcedir, "build", "obj")
 out: str = "main.exe"
 cxx: str = "g++"
 pflags: str = "-std=c++17"
-flags: str = "-Wall -lmingw32 -lSDL2main -lSDL2"
+flags: str = "-g -Wall -lmingw32 -lSDL2main -lSDL2"
 
 Dynamic_Includes_Raw: List[str] = ["/src/core"]
 Static_Includes_Raw: List[str] = ["/SDL2/include"] # Static includes remain unchecked
