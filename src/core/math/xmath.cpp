@@ -25,6 +25,14 @@ float xmath::precise_fastInvSqrt(const float x, const size_t rounds) {
         return y;
 }
 
+int xmath::isEven(size_t num) {
+        return !(num & 0b1);
+}
+
+int xmath::notEven(size_t num) {
+        return num & 0b1;
+}
+
 // This algorithm blow my mind. I found it on a random tutorial, and spent 30 minutes
 // trying to verify that it's correct, and I also benchmarked it and found it to be
 // ~2 times as fast as other methods (specifically shifting-and-checking)
